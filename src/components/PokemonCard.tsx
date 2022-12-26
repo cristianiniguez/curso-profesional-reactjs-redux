@@ -1,7 +1,12 @@
 import { Card } from 'antd';
 import { StarOutlined } from '@ant-design/icons';
+import { FC } from 'react';
 
-const PokemonCard = () => {
+type PokemonCardProps = {
+  name: string;
+};
+
+const PokemonCard: FC<PokemonCardProps> = ({ name }) => {
   const cover = (
     <img
       src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png'
@@ -10,7 +15,7 @@ const PokemonCard = () => {
   );
 
   return (
-    <Card title='Ditto' cover={cover} extra={<StarOutlined />}>
+    <Card title={name} cover={cover} extra={<StarOutlined />}>
       <Card.Meta description='fire, magic' />
     </Card>
   );
