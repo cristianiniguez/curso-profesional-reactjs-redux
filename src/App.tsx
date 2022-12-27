@@ -10,7 +10,7 @@ import PokemonList from './components/PokemonList';
 import { getPokemons } from './api';
 
 const App: FC = () => {
-  const pokemons = useSelector<RootState, Pokemon[]>((state) => state.pokemons);
+  const pokemons = useSelector((state: RootState) => state.pokemons);
   const dispatch = useDispatch();
 
   useEffect(() => {
