@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 // redux
-import { connect, MapDispatchToProps, MapStateToProps } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setPokemonsAction } from './actions';
 // components
 import { Col, Row } from 'antd';
@@ -9,14 +9,12 @@ import PokemonList from './components/PokemonList';
 // api
 import { getPokemons } from './api';
 
-type AppStateProps = { pokemons: Pokemon[] };
-type AppDispatchProps = { setPokemons: (payload: Pokemon[]) => void };
-type AppOwnProps = {};
-type AppProps = AppStateProps & AppDispatchProps & AppOwnProps;
+const App: FC = () => {
+  const pokemons = useSelector<RootState, Pokemon[]>((state) => state.pokemons);
+  const dispatch = useDispatch();
 
-const App: FC<AppProps> = ({ pokemons, setPokemons }) => {
   useEffect(() => {
-    getPokemons().then(setPokemons);
+    getPokemons().then((pokemons) => dispatch(setPokemonsAction(pokemons)));
   }, []);
 
   return (
@@ -42,14 +40,4 @@ const App: FC<AppProps> = ({ pokemons, setPokemons }) => {
   );
 };
 
-const mapStateToProps: MapStateToProps<AppStateProps, AppOwnProps, RootState> = (
-  state: RootState,
-) => ({
-  pokemons: state.pokemons,
-});
-
-const mapDispatchToProps: MapDispatchToProps<AppDispatchProps, AppOwnProps> = (dispatch) => ({
-  setPokemons: (payload: Pokemon[]) => dispatch(setPokemonsAction(payload)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
