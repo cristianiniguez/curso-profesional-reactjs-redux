@@ -7,14 +7,20 @@ import { Col, Row } from 'antd';
 import SearchBar from './components/SearchBar';
 import PokemonList from './components/PokemonList';
 // api
-import { getPokemons } from './api';
+import { getPokemon, getPokemons } from './api';
 
 const App: FC = () => {
   const pokemons = useSelector((state: RootState) => state.pokemons);
   const dispatch = useDispatch();
 
+  const fetchPokemons = async () => {
+    const pokemonSummaries = await getPokemons();
+    const pokemonDetails = await Promise.all(pokemonSummaries.map(getPokemon));
+    dispatch(setPokemonsAction(pokemonDetails));
+  };
+
   useEffect(() => {
-    getPokemons().then((pokemons) => dispatch(setPokemonsAction(pokemons)));
+    fetchPokemons();
   }, []);
 
   return (

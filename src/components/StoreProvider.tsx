@@ -3,10 +3,10 @@ import { applyMiddleware, compose, legacy_createStore as createStore } from 'red
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 
-import { featuring, logger } from '../middlewares';
+import { logger } from '../middlewares';
 import { pokemonsReducer } from '../reducers/pokemons';
 
-const composedEnhancers = compose(composeWithDevTools(), applyMiddleware(logger, featuring));
+const composedEnhancers = compose(composeWithDevTools(), applyMiddleware(logger));
 
 const store = createStore(pokemonsReducer, composedEnhancers);
 
