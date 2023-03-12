@@ -8,10 +8,14 @@ type PokemonSummary = {
   url: string;
 };
 
+type PokemonType = { slot: number; type: PokemonTypeSummary };
+
 type PokemonDetail = {
+  id: number;
   name: string;
   sprites: { front_default: string };
-  types: { slot: number; type: PokemonTypeSummary }[];
+  types: PokemonType[];
+  favorite?: boolean;
 };
 
 type GetPokemonsResponse = {
@@ -37,7 +41,8 @@ type RootState = PokemonsState;
 type Action =
   | { type: 'GET_POKEMONS' }
   | { type: 'GET_POKEMONS_SUCCESS'; payload: PokemonDetail[] }
-  | { type: 'GET_POKEMONS_FAILURE' };
+  | { type: 'GET_POKEMONS_FAILURE' }
+  | { type: 'SET_POKEMON_FAVORITE'; payload: { id: number } };
 
 type AppDispatch = ThunkDispatch<RootState, any, Action>;
 

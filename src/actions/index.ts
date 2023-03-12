@@ -11,3 +11,8 @@ export const getPokemonsAction = (): AppThunk => async (dispatch) => {
     dispatch({ type: 'GET_POKEMONS_FAILURE' });
   }
 };
+
+export const setFavoriteAction = (pokemonId: number): Action => ({
+  type: 'SET_POKEMON_FAVORITE',
+  payload: { id: pokemonId },
+});
