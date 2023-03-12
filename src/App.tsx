@@ -1,25 +1,20 @@
 import { FC, useEffect } from 'react';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { getPokemonsWithDetails } from './actions';
+import { getPokemonsAction } from './actions';
 // components
-import { Col, Row } from 'antd';
+import { Col, Row, Spin } from 'antd';
 import SearchBar from './components/SearchBar';
 import PokemonList from './components/PokemonList';
-// api
-import { getPokemons } from './api';
 
 const App: FC = () => {
   const pokemons = useSelector((state: RootState) => state.pokemons);
-  const dispatch = useDispatch();
+  const loading = useSelector((state: RootState) => state.loading);
 
-  const fetchPokemons = async () => {
-    const pokemonSummaries = await getPokemons();
-    dispatch(getPokemonsWithDetails(pokemonSummaries));
-  };
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    fetchPokemons();
+    dispatch(getPokemonsAction());
   }, []);
 
   return (
@@ -37,9 +32,15 @@ const App: FC = () => {
       </Row>
 
       <Row style={{ padding: 24 }}>
-        <Col span={22} offset={1}>
-          <PokemonList pokemons={pokemons} />
-        </Col>
+        {loading ? (
+          <Col offset={12}>
+            <Spin spinning size='large' />
+          </Col>
+        ) : (
+          <Col span={22} offset={1}>
+            <PokemonList pokemons={pokemons} />
+          </Col>
+        )}
       </Row>
     </main>
   );

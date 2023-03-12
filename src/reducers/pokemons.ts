@@ -1,11 +1,16 @@
 const initialState: PokemonsState = {
+  loading: false,
   pokemons: [],
 };
 
 export const pokemonsReducer = (state = initialState, action: Action) => {
   switch (action.type) {
-    case 'SET_POKEMONS':
-      return { ...state, pokemons: action.payload };
+    case 'GET_POKEMONS':
+      return { ...state, loading: true };
+    case 'GET_POKEMONS_SUCCESS':
+      return { ...state, loading: false, pokemons: action.payload };
+    case 'GET_POKEMONS_FAILURE':
+      return { ...state, loading: false };
     default:
       return state;
   }

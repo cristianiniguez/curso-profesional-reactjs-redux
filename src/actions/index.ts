@@ -1,13 +1,13 @@
-import { getPokemon } from '../api';
+import { getPokemon, getPokemons } from '../api';
 
-export const setPokemonsAction = (payload: PokemonDetail[]): Action => ({
-  type: 'SET_POKEMONS',
-  payload,
-});
+export const getPokemonsAction = (): AppThunk => async (dispatch) => {
+  dispatch({ type: 'GET_POKEMONS' });
 
-export const getPokemonsWithDetails =
-  (pokemons: PokemonSummary[] = []): AppThunk =>
-  async (dispatch) => {
-    const pokemonDetails = await Promise.all(pokemons.map(getPokemon));
-    dispatch(setPokemonsAction(pokemonDetails));
-  };
+  try {
+    const pokemonSummaries = await getPokemons();
+    const pokemonDetails = await Promise.all(pokemonSummaries.map(getPokemon));
+    dispatch({ type: 'GET_POKEMONS_SUCCESS', payload: pokemonDetails });
+  } catch (error) {
+    dispatch({ type: 'GET_POKEMONS_FAILURE' });
+  }
+};
