@@ -1,13 +1,13 @@
 import { FC, useEffect } from 'react';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setPokemonsAction } from './actions';
+import { getPokemonsWithDetails } from './actions';
 // components
 import { Col, Row } from 'antd';
 import SearchBar from './components/SearchBar';
 import PokemonList from './components/PokemonList';
 // api
-import { getPokemon, getPokemons } from './api';
+import { getPokemons } from './api';
 
 const App: FC = () => {
   const pokemons = useSelector((state: RootState) => state.pokemons);
@@ -15,8 +15,7 @@ const App: FC = () => {
 
   const fetchPokemons = async () => {
     const pokemonSummaries = await getPokemons();
-    const pokemonDetails = await Promise.all(pokemonSummaries.map(getPokemon));
-    dispatch(setPokemonsAction(pokemonDetails));
+    dispatch(getPokemonsWithDetails(pokemonSummaries));
   };
 
   useEffect(() => {

@@ -34,3 +34,10 @@ type RootState = PokemonsState;
 // actions
 
 type Action = { type: 'SET_POKEMONS'; payload: Pokemon[] };
+
+type AppThunk<ReturnType = void> = import('redux-thunk').ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action
+>;
