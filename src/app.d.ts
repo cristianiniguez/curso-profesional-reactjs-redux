@@ -29,12 +29,12 @@ type GetPokemonReponse = PokemonDetail;
 
 // store
 
-type PokemonsState = {
-  loading: boolean;
-  pokemons: PokemonDetail[];
+type RootState = {
+  pokemons: {
+    loading: boolean;
+    data: PokemonDetail[];
+  };
 };
-
-type RootState = PokemonsState;
 
 // actions
 

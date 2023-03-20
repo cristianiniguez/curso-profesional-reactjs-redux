@@ -5,11 +5,11 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from '@redux-devtools/extension';
 
 import { logger } from '../middlewares';
-import { pokemonsReducer } from '../reducers/pokemons';
+import rootReducer from '../reducers/rootReducer';
 
 const composedEnhancers = composeWithDevTools(applyMiddleware(thunk, logger));
 
-const store = createStore(pokemonsReducer, composedEnhancers);
+const store = createStore(rootReducer, composedEnhancers);
 
 const StoreProvider: FC<PropsWithChildren> = ({ children }) => (
   <Provider store={store}>{children}</Provider>
