@@ -1,16 +1,15 @@
 import { useEffect } from 'react';
 // redux
-import { useDispatch, useSelector } from 'react-redux';
-import { getPokemonsAction } from './actions';
+import { getPokemonsAction } from './slices/pokemonsSlice';
 // components
 import { Col, Row, Spin } from 'antd';
 import SearchBar from './components/SearchBar';
 import PokemonList from './components/PokemonList';
+import { useAppDispatch, useAppSelector } from './store';
 
 const App = () => {
-  const { data: pokemons, loading } = useSelector((state: RootState) => state.pokemons);
-
-  const dispatch = useDispatch<AppDispatch>();
+  const { data: pokemons, loading } = useAppSelector((state) => state.pokemons);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getPokemonsAction());

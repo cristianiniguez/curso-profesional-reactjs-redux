@@ -26,29 +26,3 @@ type GetPokemonsResponse = {
 };
 
 type GetPokemonReponse = PokemonDetail;
-
-// store
-
-type RootState = {
-  pokemons: {
-    loading: boolean;
-    data: PokemonDetail[];
-  };
-};
-
-// actions
-
-type Action =
-  | { type: 'GET_POKEMONS' }
-  | { type: 'GET_POKEMONS_SUCCESS'; payload: PokemonDetail[] }
-  | { type: 'GET_POKEMONS_FAILURE' }
-  | { type: 'SET_POKEMON_FAVORITE'; payload: { id: number } };
-
-type AppDispatch = ThunkDispatch<RootState, any, Action>;
-
-type AppThunk<ReturnType = void> = import('redux-thunk').ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action
->;

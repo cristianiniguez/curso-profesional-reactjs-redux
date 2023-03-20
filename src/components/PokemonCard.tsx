@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
 import { Badge, Card, Space } from 'antd';
 import StarButton from './StarButton';
-import { setFavoriteAction } from '../actions';
+import { togglePokemonFavorite } from '../slices/pokemonsSlice';
+import { useAppDispatch } from '../store';
 
 type PokemonCardProps = {
   id: number;
@@ -13,12 +13,12 @@ type PokemonCardProps = {
 };
 
 const PokemonCard: FC<PokemonCardProps> = ({ id, name, image, types, favorite = false }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const cover = <img src={image} alt={name} />;
 
   const setFavorite = () => {
-    dispatch(setFavoriteAction(id));
+    dispatch(togglePokemonFavorite(id));
   };
 
   const description = (
